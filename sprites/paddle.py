@@ -1,5 +1,7 @@
 import pygame
 from typing import Literal
+from constants import Config
+
 
 PADDLE_X_OFFSET = 50
 PADDLE_HEIGHT = 50
@@ -13,7 +15,7 @@ class Paddle:
         self.height = PADDLE_HEIGHT
         self.width = PADDLE_WIDTH
         self.speed = 8
-        self.color = (255, 0, 0)
+        self.color = Config.COLOR
         self.x = (
             PADDLE_X_OFFSET
             if player == 1
@@ -33,7 +35,7 @@ class Paddle:
     def get_height(self):
         return self.height
 
-    def keydown_handler(self):
+    def handler(self):
         keys = pygame.key.get_pressed()
         if (
             keys[pygame.K_UP] if self._player == 2 else keys[pygame.K_z]
@@ -50,3 +52,11 @@ class Paddle:
             self.color,
             pygame.Rect(int(self.x), int(self.y), self.width, self.height),
         )
+
+    def reset(self):
+        self.x = (
+            PADDLE_X_OFFSET
+            if self._player == 1
+            else self._window.get_width() - (PADDLE_X_OFFSET + (PADDLE_WIDTH / 2))
+        )
+        self.y = (self._window.get_height() / 2) - PADDLE_HEIGHT / 2

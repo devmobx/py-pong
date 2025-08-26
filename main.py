@@ -1,9 +1,9 @@
 import pygame
-from sprites import Ball, Paddle
+from sprites import Paddle, Ball, Score
 from constants import Config
 
 
-def main():
+def initPyPong():
     pygame.init()
     window = pygame.display.set_mode((Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT))
     clock = pygame.time.Clock()
@@ -11,21 +11,20 @@ def main():
 
     player_1 = Paddle(window, 1)
     player_2 = Paddle(window, 2)
-    ball = Ball(window)
+    ball = Ball(window, player_1, player_2)
+    score = Score(window, player_1, player_2, ball)
 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
-        player_1.keydown_handler()
-        player_2.keydown_handler()
-        ball.move(player_1, player_2)
-
         window.fill((0, 0, 0))
-        player_1.draw()
-        player_2.draw()
-        ball.draw()
+
+        for sprite in [player_1, player_2, ball, score]:
+            sprite.handler()
+            sprite.draw()
+
         pygame.display.flip()
 
         clock.tick(60)
@@ -34,4 +33,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    initPyPong()
