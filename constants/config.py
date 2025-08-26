@@ -1,3 +1,3 @@
 class Config:
-    SCREEN_WIDTH = 800
-    SCREEN_HEIGHT = 600
+    WINDOW_WIDTH = 800
+    WINDOW_HEIGHT = 600
